@@ -25,7 +25,7 @@ metadata:
   name: binding-policy-iam
   namespace: rhacm-policies
 placementRef:
-  name: dev-clusters
+  name: managed-clusters
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:

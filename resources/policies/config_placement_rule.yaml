@@ -1,7 +1,7 @@
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: dev-clusters
+  name: managed-clusters
   namespace: rhacm-policies
 spec:
   clusterConditions:
@@ -9,7 +9,7 @@ spec:
     status: "True"
   clusterSelector:
     matchExpressions:
-      - key: environment
+      - key: env
         operator: In
-        values: 
-        - "dev"
+        values:
+        - "managed"

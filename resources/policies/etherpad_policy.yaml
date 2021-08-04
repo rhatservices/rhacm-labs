@@ -1,8 +1,7 @@
----
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: policy-certificate
+  name: policy-etherpad
   namespace: rhacm-policies
 spec:
   remediationAction: inform
@@ -10,28 +9,32 @@ spec:
   policy-templates:
     - objectDefinition:
         apiVersion: policy.open-cluster-management.io/v1
-        kind: CertificatePolicy
+        kind: ConfigurationPolicy
         metadata:
-          name: policy-certificate-example
+          name: policy-etherpad
         spec:
+          severity: medium
           namespaceSelector:
             include:
-            - openshift-ingress
-            exclude: []
-          remediationAction: inform
-          severity: low
-          minimumDuration: 2200h
+            - etherpad
+          object-templates:
+            - complianceType: inform
+              objectDefinition:
+                apiVersion: v1
+                kind: Secret
+                metadata:
+                  name: etherpad-secret
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: certificate-placement-binding
+  name: binding-policy-etherpad
   namespace: rhacm-policies
 placementRef:
   name: managed-clusters
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-- name: policy-certificate
+- name: policy-etherpad
   kind: Policy
   apiGroup: policy.open-cluster-management.io
